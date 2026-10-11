@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock & Inventory - Latest Records</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery Library -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body class="bg-light p-4">
+    <div class="container">
+        <!-- Page Title -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Inventory Records</h2>
+        </div>
+
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Live Inventory Feed</h5>
+                
+                <!-- Fetch Button -->
+                <button id="load-btn" class="btn btn-primary mb-3">Fetch Latest Stock</button>
+                
+                <!-- Loading text -->
+                <span id="loading-text" class="text-muted ms-2" style="display: none;">Loading items, please wait...</span>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped" id="records-table">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Id</th>
+                                <th>Item Name</th>
+                                <th>Category</th>
+                                <th>Qty</th>
+                                <th>Unit Price</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="records-body">
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">Click the button above to load items.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Beginner-friendly jQuery Script -->
+    <script>
+        // Wait for HTML document to finish loading
+        $(document).ready(function() {
+
+            // When user clicks the fetch button
+            $('#load-btn').click(function() {
+                
+                // Show loading indicator
+                $('#loading-text').show();
+
+                // Simple AJAX GET call to Django backend
+                $.ajax({
+                    url: 'http://127.0.0.1:8000/api/records/',
+                    type: 'GET',
+                    headers: {
+                        // Regular user test header (read-only)
+                        'X-User-Id': '2'
+                    },
+                    success: function(response) {
+                        // Hide loading indicator
+                        $('#loading-text').hide();
+
+                        // Empty string to hold table rows
+                        var tableRowsHtml = '';
+
+                        // Check if list is empty
+                        if (response.length === 0) {
+                            tableRowsHtml = '<tr><td colspan="6" class="text-center text-muted">No inventory records found.</td></tr>';
+                        } else {
+                            // Standard loop over records array
+                            for (var i = 0; i < response.length; i++) {
+    var item = response[i];
+
+    var badgeClass = 'badge bg-success';
+    if (item.quantity === 0) {
+        badgeClass = 'badge bg-danger';
+    } else if (item.quantity <= 10) {
+        badgeClass = 'badge bg-warning text-dark';
+    }
+
+    tableRowsHtml = tableRowsHtml + '<tr>' +
+        '<td>#' + item.id + '</td>' +
+        '<td>' + item.name + '</td>' +
+        '<td>' + item.category + '</td>' +
+        '<td>' + item.quantity + '</td>' +
+        '<td>$' + Number(item.unit_price).toFixed(2) + '</td>' +
+        '<td><span class="' + badgeClass + '">' + item.status + '</span></td>' +
+    '</tr>';
+}
+                        }
+
+                        // Put generated rows inside tbody
+                        $('#records-body').html(tableRowsHtml);
+                    },
+                    error: function(err) {
+                        $('#loading-text').hide();
+                        alert('Could not fetch records. Please make sure the Django server is running.');
+                        console.log('AJAX Error:', err);
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>

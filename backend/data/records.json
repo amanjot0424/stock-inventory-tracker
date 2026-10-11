@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "user_id": 2,
+    "sku": "SKU-EL-1001",
+    "name": "Wooden Desk",
+    "category": "Furniture",
+    "quantity": 4,
+    "unit_price": 99.99,
+    "description": "A Solid Wooden table for house holds.",
+    "status": "Low Stock"
+  },
+  {
+    "id": 2,
+    "user_id": 2,
+    "sku": "SKU-OFF-2004",
+    "name": "Task Chair",
+    "category": "Furniture",
+    "quantity": 6,
+    "unit_price": 189.0,
+    "description": "Adjustable lumbar high-back office desk chair.",
+    "status": "Low Stock"
+  },
+  {
+    "id": 3,
+    "user_id": 1,
+    "sku": "SKU-EL-1002",
+    "name": "USB-C Charging Cable",
+    "category": "Electronics",
+    "quantity": 14,
+    "unit_price": 149.0,
+    "description": "Charging Cable 100W Power Delivery and dual Side ports.",
+    "status": "In Stock"
+  },
+  {
+    "id": 4,
+    "user_id": 2,
+    "sku": "SKU-STA-3001",
+    "name": "Hardcover Notebooks",
+    "category": "Stationery",
+    "quantity": 110,
+    "unit_price": 12.75,
+    "description": "Pack of three fountain pen friendly journals.",
+    "status": "In Stock"
+  },
+  {
+    "user_id": 1,
+    "sku": "SKU-109",
+    "name": "Mouse",
+    "category": "Electronics",
+    "quantity": 43,
+    "unit_price": 34.53,
+    "description": "First mouse",
+    "status": "In Stock",
+    "id": 5
+  },
+  {
+    "id": 6,
+    "name": "Printer",
+    "category": "Hardware",
+    "quantity": 23,
+    "unit_price": 32.99,
+    "description": "High Quality printers",
+    "status": "In Stock",
+    "user_id": 1
+  }
+]
